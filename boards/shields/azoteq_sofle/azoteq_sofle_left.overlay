@@ -1,0 +1,31 @@
+#include "azoteq_sofle.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+
+&kscan0 {
+    col-gpios
+        = <&pro_micro 19 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 18 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 15 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 14 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 16 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 10 GPIO_ACTIVE_HIGH>
+        ;
+};
+
+
+/ {
+    left_encoder: encoder_left {
+        status = "okay";
+        compatible = "alps,ec11";
+        label = "LEFT_ENCODER";
+        resolution = <4>;
+        steps = <80>;
+        a-gpios = <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;  // D21 = P0.31
+        b-gpios = <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;  // D20 = P0.29
+    };
+
+    sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&left_encoder>;
+    };
+};

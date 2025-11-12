@@ -1,0 +1,33 @@
+#include <zephyr/dt-bindings/i2c/i2c.h>
+#include <dt-bindings/pinctrl/nrf-pinctrl.h>
+#include <dt-bindings/gpio/gpio.h>
+
+#include "azoteq_sofle.dtsi"
+#include "azoteq_sofle-pinctrl.dtsi"
+
+&default_transform {
+    col-offset = <6>;
+};
+
+&kscan0 {
+    col-gpios
+        = <&pro_micro 10 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 16 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 14 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 15 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 18 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 19 GPIO_ACTIVE_HIGH>
+        ;
+};
+
+&i2c0 {
+    status = "okay";
+};
+
+&tps43 {
+    status = "okay";
+};
+
+&tps43_input {
+    status = "okay";
+};
