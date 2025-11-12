@@ -24,6 +24,6 @@ include:
   - board: nice_nano_v2
     shield: azoteq_sofle_left nice_view
   - board: nice_nano_v2
-    shield: azoteq_sofle_right azoteq_touchpad nice_view
+    shield: azoteq_sofle_right nice_view
   - board: nice_nano_v2
     shield: settings_reset
