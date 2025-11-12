@@ -22,12 +22,36 @@
 
 &i2c0 {
     status = "okay";
+    clock-frequency = <I2C_BITRATE_FAST>;
+    pinctrl-0 = <&i2c0_default>;
+    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    tps43: iqs5xx@74 {
+        status = "okay";
+        compatible = "azoteq,iqs5xx";
+        reg = <0x74>;
+
+        one-finger-tap;
+        press-and-hold;
+        press-and-hold-time = <250>;
+        two-finger-tap;
+
+        scroll;
+        natural-scroll-y;
+        natural-scroll-x;
+
+        bottom-beta = <5>;
+        stationary-threshold = <5>;
+
+        flip-y;
+
+        rdy-gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;   // P0.31 (D21)
+        reset-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;  // P0.29 (D20)
+    };
 };
 
-&tps43 {
+&azoteq_split {
     status = "okay";
-};
-
-&tps43_input {
-    status = "okay";
+    device = <&tps43>;  // on peripheral board - link on the touchpad
 };

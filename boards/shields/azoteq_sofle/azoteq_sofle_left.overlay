@@ -29,3 +29,9 @@
         sensors = <&left_encoder>;
     };
 };
+
+
+&azoteq_listener {
+    status = "okay";
+    device = <&azoteq_split>;  // link on the input-split (not touchpad)
+};

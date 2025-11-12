@@ -41,43 +41,13 @@ RC(3,0) RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(3,5) RC(4,5) RC(4,6) RC(3,6) RC(3,7) 
             ;
     };
 
-    // Sensors определяется только в левой половине вместе с энкодером
-
-    tps43_input: tps43_input {
-        compatible = "zmk,input-listener";
-        device = <&tps43>;
-        status = "disabled";
+    azoteq_split: azoteq_split {
+        compatible = "zmk,input-split";
     };
-};
-
-&i2c0 {
-    status = "disabled";
-    clock-frequency = <I2C_BITRATE_FAST>;
-    pinctrl-0 = <&i2c0_default>;
-    pinctrl-1 = <&i2c0_sleep>;
-    pinctrl-names = "default", "sleep";
-
-    tps43: iqs5xx@74 {
-        status = "disabled";
-        compatible = "azoteq,iqs5xx";
-        reg = <0x74>;
-
-        one-finger-tap;
-        press-and-hold;
-        press-and-hold-time = <250>;
-        two-finger-tap;
-
-        scroll;
-        natural-scroll-y;
-        natural-scroll-x;
-
-        bottom-beta = <5>;
-        stationary-threshold = <5>;
-
-        flip-y;
-
-        rdy-gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;   // P0.31 (D21)
-        reset-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;  // P0.29 (D20)
+    
+    azoteq_listener: azoteq_listener {
+        compatible = "zmk,input-listener";
+        status = "disabled";  // IMPORTANT: this listener is disabled
     };
 };
 
