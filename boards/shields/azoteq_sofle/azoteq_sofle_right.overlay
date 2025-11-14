@@ -20,6 +20,7 @@
         ;
 };
 
+/* pro_micro_i2c */
 &i2c0 {
     status = "okay";
     clock-frequency = <I2C_BITRATE_FAST>;
@@ -51,7 +52,6 @@
     };
 };
 
-&azoteq_split {
-    status = "okay";
-    device = <&tps43>;  // on peripheral board - link on the touchpad
+&tps43_split {
+    device = <&tps43>;
 };

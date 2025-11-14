@@ -41,14 +41,21 @@ RC(3,0) RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(3,5) RC(4,5) RC(4,6) RC(3,6) RC(3,7) 
             ;
     };
 
-    azoteq_split: azoteq_split {
-        compatible = "zmk,input-split";
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        tps43_split: tps43_split@74 {
+            compatible = "zmk,input-split";
+            reg = <0x74>;
+        };
     };
-    
-    azoteq_listener: azoteq_listener {
+ 
+	tps43_listener: tps43_listener {
         compatible = "zmk,input-listener";
-        status = "disabled";  // IMPORTANT: this listener is disabled
+        status = "disabled";
+        device = <&tps43_split>;
     };
+
 };
 
 &spi3 {
