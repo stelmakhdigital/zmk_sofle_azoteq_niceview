@@ -20,12 +20,23 @@
         ;
 };
 
-/* pro_micro_i2c */
+
+/ {
+    aliases {
+        tps43 = &tps43;
+    };
+    tps43_input: tps43_input {
+        compatible = "zmk,input-listener";
+        device = <&tps43>;
+    };
+};
+
+/* pro_micro_i2c i2c1*/
 &i2c0 {
     status = "okay";
     clock-frequency = <I2C_BITRATE_FAST>;
-    pinctrl-0 = <&i2c0_default>;
-    pinctrl-1 = <&i2c0_sleep>;
+    pinctrl-0 = <&i2c0_azoteq_default>;
+    pinctrl-1 = <&i2c0_azoteq_sleep>;
     pinctrl-names = "default", "sleep";
 
     tps43: iqs5xx@74 {
@@ -47,11 +58,8 @@
 
         flip-y;
 
-        rdy-gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;   // P0.31 (D21)
-        reset-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;  // P0.29 (D20)
+        reset-gpios = <&pro_micro 20 GPIO_ACTIVE_LOW>;  // P0.29 (D20)
+        rdy-gpios = <&pro_micro 21 GPIO_ACTIVE_HIGH>;   // P0.31 (D21)
+    
     };
-};
-
-&tps43_split {
-    device = <&tps43>;
 };
