@@ -28,14 +28,14 @@ freeze:
 	pip freeze > ${BASE_DIR}/requirements.txt
 
 _build_l:
-	west build -d build/left -s ${ZMK_APP_DIR} -b ${MAIN_BOARD} -- \
+	west build -d build/left -s ${ZMK_APP_DIR} -b ${MAIN_BOARD} -S zmk-usb-logging -- \
 	-DSHIELD="azoteq_sofle_left nice_view" \
 	-DZMK_CONFIG=${DZMK_CONFIG}
 	mkdir -p ${FIRMWARE_DIR}
 	cp build/left/zephyr/zmk.uf2 ${FIRMWARE_DIR}/azoteq_sofle_left_${MAIN_BOARD}.uf2
 
 _build_r:
-	west build -d build/right -s ${ZMK_APP_DIR} -b ${MAIN_BOARD} -- \
+	west build -d build/right -s ${ZMK_APP_DIR} -b ${MAIN_BOARD} -S zmk-usb-logging -- \
 	-DSHIELD="azoteq_sofle_right nice_view" \
 	-DZMK_CONFIG=${DZMK_CONFIG}
 	mkdir -p ${FIRMWARE_DIR}
@@ -47,14 +47,14 @@ _build_reset:
 	cp build/reset/zephyr/zmk.uf2 ${FIRMWARE_DIR}/azoteq_sofle_reset_${MAIN_BOARD}.uf2
 
 _clear_all:
-	rm -rf .west build ${FIRMWARE_DIR} .cache .config ~/Library/Caches/zephyr/
+	rm -rf .west build ${FIRMWARE_DIR} zephyr/.cache/ zmk/.cache/ ~/Library/Caches/zephyr/
+	find . -name "__pycache__" -type d -exec rm -rf {} +
 
 _clear:
 	rm -rf .west build ${FIRMWARE_DIR}
 
 ## * make all - build all firmwares (left, right, reset);
-all: _clear _env _build_l _build_r _build_reset
-
+all: _clear_all _env _build_l _build_r _build_reset
 
 _first_init:
 	brew update && \
@@ -87,21 +87,11 @@ _env:
 ## * make start - initial project setup (venv, west, zephyr env);
 start: _first_init _install_west _init_env_values
 
-
-
-print:
-	@echo "azoteq_sofle_left.overlay"
-	@echo '```'
-	@cat boards/shields/azoteq_sofle/azoteq_sofle_left.overlay
-	@echo '```'
-	@echo "\n"
-	@echo "azoteq_sofle_right.overlay"
-	@echo '```'
-	@cat boards/shields/azoteq_sofle/azoteq_sofle_right.overlay
-	@echo '```'
-	@echo "\n"
-	@echo "azoteq_sofle.dtsi"
-	@echo '```'
-	@cat boards/shields/azoteq_sofle/azoteq_sofle.dtsi
-	@echo '```'
-	@echo "\n"
+check-logs:
+	@DEV=$$(ls /dev/tty.usbmodem* | head -n1); \
+	if [ -z "$$DEV" ]; then \
+		echo "No /dev/tty.usbmodem* device found!"; \
+		exit 1; \
+	fi; \
+	echo "Connecting to $$DEV ..."; \
+	screen $$DEV 115200
