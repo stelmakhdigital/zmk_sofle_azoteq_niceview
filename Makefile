@@ -87,6 +87,58 @@ _env:
 ## * make start - initial project setup (venv, west, zephyr env);
 start: _first_init _install_west _init_env_values
 
+
+print-copy:
+	$(MAKE) print | pbcopy
+
+print:
+	@echo "azoteq_sofle_left.overlay"
+	@echo '```'
+	@cat boards/shields/azoteq_sofle/azoteq_sofle_left.overlay
+	@echo '```'
+	@echo "\n"
+	@echo "azoteq_sofle_right.overlay"
+	@echo '```'
+	@cat boards/shields/azoteq_sofle/azoteq_sofle_right.overlay
+	@echo '```'
+	@echo "\n"
+	@echo "azoteq_sofle.dtsi"
+	@echo '```'
+	@cat boards/shields/azoteq_sofle/azoteq_sofle.dtsi
+	@echo '```'
+	@echo "\n"
+	@echo "Kconfig.defconfig"
+	@echo '```'
+	@cat boards/shields/azoteq_sofle/Kconfig.defconfig
+	@echo '```'
+	@echo "\n"
+	@echo "azoteq_sofle-pinctrl.dtsi"
+	@echo '```'
+	@cat boards/shields/azoteq_sofle/azoteq_sofle-pinctrl.dtsi
+	@echo '```'
+	@echo "\n"
+	@echo "west.yml"
+	@echo '```'
+	@cat config/west.yml
+	@echo '```'
+	@echo "\n"
+	@echo "azoteq_sofle.conf"
+	@echo '```'
+	@cat config/azoteq_sofle.conf
+	@echo '```'
+	@echo "\n"
+	@echo "azoteq_sofle_right.conf"
+	@echo '```'
+	@cat config/azoteq_sofle_right.conf
+	@echo '```'
+	@echo "\n"
+	@echo "azoteq_sofle_left.conf"
+	@echo '```'
+	@cat config/azoteq_sofle_left.conf
+	@echo '```'
+	@echo "\n"
+
+## * make check-logs - connect to the keyboard logs via screen;
 check-logs:
 	@DEV=$$(ls /dev/tty.usbmodem* | head -n1); \
 	if [ -z "$$DEV" ]; then \
