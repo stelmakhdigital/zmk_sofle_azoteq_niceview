@@ -43,7 +43,7 @@ layers:
   - C
   - V
   - B
-  - MUTE
+  - OUT TOG
   - RGB TOG
   - N
   - M
