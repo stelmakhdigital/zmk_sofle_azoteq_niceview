@@ -30,8 +30,6 @@
         variant = "43mm";                    /* 43mm x 40mm trackpad */
         resolution-x = <2048>;               /* X-axis resolution */
         resolution-y = <1792>;               /* Y-axis resolution */
-        max-x = <2048>;                      /* Maximum X coordinate */
-        max-y = <1792>;                      /* Maximum Y coordinate */
         
         /* GPIO connections (adjust pin numbers for your board) */
         int-gpios = <&pro_micro 21 GPIO_ACTIVE_HIGH>;  /* interrupt pin */
@@ -40,7 +38,6 @@
         /* Touch detection settings */
         touch-threshold = <40>;              /* Touch sensitivity (lower = more sensitive) */
         max-touches = <5>;                   /* Maximum simultaneous touches */
-        max-touch-points = <5>;              /* Same as max-touches */
         palm-reject-threshold = <100>;       /* Ignore touches larger than this */
         
         /* Feature enablement */

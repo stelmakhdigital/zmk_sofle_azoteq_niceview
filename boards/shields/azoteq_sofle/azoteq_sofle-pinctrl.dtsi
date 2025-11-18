@@ -33,6 +33,7 @@
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 0, 8)>,    // P0.08 (D1)
                     <NRF_PSEL(TWIM_SCL, 0, 22)>;   // P0.22 (D4)
+            bias-pull-up;  // Enable internal pull-up resistors for I2C
         };
     };
 
