@@ -12,38 +12,21 @@
         ;
 };
 
+/ {
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
 
-/* pro_micro_i2c i2c1*/
-&i2c0 {
-    status = "okay";
-    clock-frequency = <I2C_BITRATE_FAST>;
-    pinctrl-0 = <&i2c0_azoteq_default>;
-    pinctrl-1 = <&i2c0_azoteq_sleep>;
-    pinctrl-names = "default", "sleep";
+        tps43_split: tps43_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+            /* No device property here - this is a proxy on central side */
+        };
+    };
 
-    tps43_trackpad: trackpad@74 {
-        compatible = "azoteq,tps43";
-        reg = <0x74>;
+    tps43_listener: tps43_listener {
+        compatible = "zmk,input-listener";
+        device = <&tps43_split>;
         status = "okay";
-        
-        /* Device variant and resolution */
-        variant = "43mm";                    /* 43mm x 40mm trackpad */
-        resolution-x = <2048>;               /* X-axis resolution */
-        resolution-y = <1792>;               /* Y-axis resolution */
-        
-        /* GPIO connections (adjust pin numbers for your board) */
-        int-gpios = <&pro_micro 21 GPIO_ACTIVE_HIGH>;  /* interrupt pin */
-        rst-gpios = <&pro_micro 20 GPIO_ACTIVE_HIGH>;  /* Reset pin */
-        
-        /* Touch detection settings */
-        touch-threshold = <40>;              /* Touch sensitivity (lower = more sensitive) */
-        max-touches = <5>;                   /* Maximum simultaneous touches */
-        palm-reject-threshold = <100>;       /* Ignore touches larger than this */
-        
-        /* Feature enablement */
-        gesture-enable;                      /* Enable gesture recognition */
-        
-        /* Communication settings */
-        i2c-timeout-ms = <10>;               /* I2C timeout in milliseconds */
     };
 };

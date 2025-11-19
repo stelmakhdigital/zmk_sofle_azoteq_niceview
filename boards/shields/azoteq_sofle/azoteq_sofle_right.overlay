@@ -63,5 +63,21 @@
         
         /* Communication settings */
         i2c-timeout-ms = <10>;               /* I2C timeout in milliseconds */
+        
+        /* Input driver settings */
+        sensitivity = <100>;                  /* Sensitivity multiplier (percentage) */
+    };
+};
+
+/ {
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        tps43_split: tps43_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+            device = <&tps43_trackpad>;
+        };
     };
 };
