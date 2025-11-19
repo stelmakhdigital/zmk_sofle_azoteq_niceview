@@ -30,14 +30,16 @@ freeze:
 _build_l:
 	west build -d build/left -s ${ZMK_APP_DIR} -b ${MAIN_BOARD} -S zmk-usb-logging -- \
 	-DSHIELD="azoteq_sofle_left nice_view" \
-	-DZMK_CONFIG=${DZMK_CONFIG}
+	-DZMK_CONFIG=${DZMK_CONFIG} \
+	-DZMK_EXTRA_MODULES=${BASE_DIR}
 	mkdir -p ${FIRMWARE_DIR}
 	cp build/left/zephyr/zmk.uf2 ${FIRMWARE_DIR}/azoteq_sofle_left_${MAIN_BOARD}.uf2
 
 _build_r:
 	west build -d build/right -s ${ZMK_APP_DIR} -b ${MAIN_BOARD} -S zmk-usb-logging -- \
 	-DSHIELD="azoteq_sofle_right nice_view" \
-	-DZMK_CONFIG=${DZMK_CONFIG}
+	-DZMK_CONFIG=${DZMK_CONFIG} \
+	-DZMK_EXTRA_MODULES=${BASE_DIR}
 	mkdir -p ${FIRMWARE_DIR}
 	cp build/right/zephyr/zmk.uf2 ${FIRMWARE_DIR}/azoteq_sofle_right_${MAIN_BOARD}.uf2
 
