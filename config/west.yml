@@ -11,6 +11,6 @@ manifest:
       import: app/west.yml
     - name: zmk_driver_azoteq
       remote: stelmakhdigital
-      revision: tps43
+      revision: master
   self:
     path: config
